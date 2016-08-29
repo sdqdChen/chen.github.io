@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -86,13 +86,25 @@
 
 
 
+<meta name="description" content="第1条：了解Objective-C语言的起源
+Objective-C是使用消息结构的语言，其运行时所应执行的代码由运行环境决定；而使用’函数调用’的语言，如C++/Java，则由编译器决定
+OC对象所占内存分配在堆中，而指针变量分配在栈上；分配在堆中的内存必须直接管理，分配在栈上的内存则会在栈帧弹出时自动清理
+Objective-C使用动态绑定(dynamic binding)的消息结构，也就是在">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试">
-<meta property="og:url" content="http://yoursite.com/2016/08/29/测试/index.html">
+<meta property="og:title" content="第一章、熟悉Objective-C">
+<meta property="og:url" content="http://yoursite.com/2016/08/30/第一章、熟悉Objective-C/index.html">
 <meta property="og:site_name" content="人年少时">
-<meta property="og:updated_time" content="2016-08-29T15:49:43.000Z">
+<meta property="og:description" content="第1条：了解Objective-C语言的起源
+Objective-C是使用消息结构的语言，其运行时所应执行的代码由运行环境决定；而使用’函数调用’的语言，如C++/Java，则由编译器决定
+OC对象所占内存分配在堆中，而指针变量分配在栈上；分配在堆中的内存必须直接管理，分配在栈上的内存则会在栈帧弹出时自动清理
+Objective-C使用动态绑定(dynamic binding)的消息结构，也就是在">
+<meta property="og:updated_time" content="2016-08-29T16:23:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="测试">
+<meta name="twitter:title" content="第一章、熟悉Objective-C">
+<meta name="twitter:description" content="第1条：了解Objective-C语言的起源
+Objective-C是使用消息结构的语言，其运行时所应执行的代码由运行环境决定；而使用’函数调用’的语言，如C++/Java，则由编译器决定
+OC对象所占内存分配在堆中，而指针变量分配在栈上；分配在堆中的内存必须直接管理，分配在栈上的内存则会在栈帧弹出时自动清理
+Objective-C使用动态绑定(dynamic binding)的消息结构，也就是在">
 
 
 
@@ -113,9 +125,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/08/29/测试/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/08/30/第一章、熟悉Objective-C/"/>
 
-  <title> 测试 | 人年少时 </title>
+  <title> 第一章、熟悉Objective-C | 人年少时 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +247,7 @@
             
             
               
-                测试
+                第一章、熟悉Objective-C
               
             
           </h1>
@@ -247,8 +259,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-29T23:39:03+08:00" content="2016-08-29">
-              2016-08-29
+            <time itemprop="dateCreated" datetime="2016-08-30T00:20:51+08:00" content="2016-08-30">
+              2016-08-30
             </time>
           </span>
 
@@ -261,8 +273,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/《EffectiveObjective-C》笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">《EffectiveObjective-C》笔记</span>
                   </a>
                 </span>
 
@@ -281,7 +293,7 @@
 
           
           
-             <span id="/2016/08/29/测试/" class="leancloud_visitors" data-flag-title="测试">
+             <span id="/2016/08/30/第一章、熟悉Objective-C/" class="leancloud_visitors" data-flag-title="第一章、熟悉Objective-C">
                &nbsp&nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -303,7 +315,67 @@
       
 
       
-        
+        <h3 id="第1条：了解Objective-C语言的起源"><a href="#第1条：了解Objective-C语言的起源" class="headerlink" title="第1条：了解Objective-C语言的起源"></a>第1条：了解Objective-C语言的起源</h3><ol>
+<li>Objective-C是使用<code>消息结构</code>的语言，其运行时所应执行的代码由运行环境决定；而使用’函数调用’的语言，如C++/Java，则由编译器决定</li>
+<li>OC对象所占内存分配在堆中，而指针变量分配在栈上；分配在堆中的内存必须直接管理，分配在栈上的内存则会在栈帧弹出时自动清理</li>
+<li>Objective-C使用<code>动态绑定(dynamic binding)</code>的消息结构，也就是在运行时才会检查对象类型。接收一条消息之后，究竟应执行何种代码，由运行期环境而非编译器来决定</li>
+</ol>
+<h3 id="第2条：在类的头文件中尽量少引入其他头文件"><a href="#第2条：在类的头文件中尽量少引入其他头文件" class="headerlink" title="第2条：在类的头文件中尽量少引入其他头文件"></a>第2条：在类的头文件中尽量少引入其他头文件</h3><ol>
+<li>在编译一个使用了某个类的头文件时，不需要知道这个类的全部细节，只需要知道有这个类名就好，所以应该使用<code>向前声明(forward declaring)-@class</code>；如果引入许多根本用不到的内容，就会增加编译时间</li>
+<li>向前声明也解决了两个类互相引用的问题：如果两个类在各自头文件中都引入了对方的头文件，就回导致“循环引用(chicken-and-egg situation)”</li>
+<li>有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下应该把协议放到类扩展中</li>
+</ol>
+<h3 id="第3条：多用字面量语法，少用与之等价的方法"><a href="#第3条：多用字面量语法，少用与之等价的方法" class="headerlink" title="第3条：多用字面量语法，少用与之等价的方法"></a>第3条：多用字面量语法，少用与之等价的方法</h3><ol>
+<li>字面量字符串：<code>NSString *str = @&quot;Effective Objective-C 2.0&quot;;</code></li>
+<li>字面量数值：<code>NSNumber *num = @1;</code></li>
+<li>字面量数组：<code>NSArray *animals = @[@&quot;cat&quot;, @&quot;dog&quot;, @&quot;mouse&quot;];</code>;取下标(subscripting)操作：<code>NSString *dog = animals[1];</code></li>
+<li>字面量字典：<code>NSDictionary *dic = @{@&quot;firstName&quot; : @&quot;Matt&quot;, @&quot;lastName&quot; : @&quot;Gall&quot;, @&quot;age&quot; : @28};</code></li>
+<li>使用字面量数组的注意点：如果数组元素中有nil，就回抛出异常，因为字面量语法实际上只是一种“语法糖(syntactic sugar)”；<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *a1 = @[<span class="built_in">NSArray</span> arrayWithObjects:obj1, obj2, obj3, <span class="literal">nil</span>];</div><div class="line"><span class="built_in">NSArray</span> *a2 = @[obj1, obj2, obj3];</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>如果obj1和obj3都有效而obj2是nil，那么用字面量语法创建数组a2时会抛出异常。a1虽然能创建出来，但是其中只含有obj1一个对象，原因在于“arrayWithObjects:”会依次处理各个参数，直到发现nil为止，所以该方法会提前结束。这表明，使用字面量语法更为安全。</li>
+<li>注：语法糖-是指计算机语言中与另外一套语法等效但是开发者用起来更方便的语法。语法糖可令程序更易读，减少代码出错几率</li>
+</ul>
+<ol>
+<li>可变数组与字典</li>
+</ol>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mutableArray[<span class="number">1</span>] = <span class="string">@"dog"</span>;</div><div class="line">mutableDictionary[<span class="string">@"lastName"</span>] = <span class="string">@"Gall"</span>;</div></pre></td></tr></table></figure>
+<ol>
+<li>所以应该使用字面量语法来创建紫都城、数值、数组、字典，这么做更加简明扼要；应该通过取下标操作来访问数组或字典中的键所对应的元素</li>
+</ol>
+<h3 id="第4条：多用类型常量，少用-define预处理指令"><a href="#第4条：多用类型常量，少用-define预处理指令" class="headerlink" title="第4条：多用类型常量，少用#define预处理指令"></a>第4条：多用类型常量，少用#define预处理指令</h3><ol>
+<li>不要用预处理指令定义常量。这样定义出来的常量不含类型信息，编译器只是会在编译前据此执行查找与替换工作。即使有人重新定义了常量值，编译器也不会产生警告，这将导致程序中的常量值不一致</li>
+<li><p>在实现文件中用<code>static const</code>来定义只在实现文件中可见的常量，通常在常量名前加k；const保证所声明的常量不能被修改</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">statci <span class="keyword">const</span> <span class="built_in">NSTimerInterval</span> kAnimationDuration = <span class="number">0.3</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在头文件中使用<code>extern</code>来声明全局常量，并在实现文件中定义其值，常量名通常用与之相关的类名做前缀</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//.h</span></div><div class="line"><span class="keyword">extern</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant;</div><div class="line"><span class="comment">//.m</span></div><div class="line"><span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant = <span class="string">@"VALUE"</span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="第5条：用枚举表示状态、选项、状态码"><a href="#第5条：用枚举表示状态、选项、状态码" class="headerlink" title="第5条：用枚举表示状态、选项、状态码"></a>第5条：用枚举表示状态、选项、状态码</h3><h5 id="本章关键词"><a href="#本章关键词" class="headerlink" title="本章关键词"></a>本章关键词</h5><ul>
+<li>消息结构：messaging structure</li>
+<li>函数调用：function calling</li>
+<li>动态绑定：dynamic binding</li>
+<li>运行期组件：runtime component</li>
+<li>动态库：dynamic library</li>
+<li>编译期：compile time</li>
+<li>超集：superset</li>
+<li>内存模型：memory model</li>
+<li>引用计数：reference counting</li>
+<li>栈帧：stack frame</li>
+<li>循环引用：chicken-and-egg situation</li>
+<li>字符串字面量：string literal</li>
+<li>字面量语法：literal syntax</li>
+<li>取下标：subscripting</li>
+<li>语法糖：syntactic sugar</li>
+<li>命名习惯：naming convention</li>
+<li>全局符号表：global symbol table</li>
+<li>底层数据类型：underlying type</li>
+<li>按位或操作符：bitwise OR operator</li>
+<li>按位与操作符：bitwise AND operator</li>
+</ul>
+
       
     </div>
 
@@ -323,28 +395,18 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/29/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2016/08/29/测试/" rel="next" title="测试">
+                <i class="fa fa-chevron-left"></i> 测试
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/30/第一章、熟悉Objective-C/" rel="prev" title="第一章、熟悉Objective-C">
-                第一章、熟悉Objective-C <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -465,7 +527,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第1条：了解Objective-C语言的起源"><span class="nav-number">1.</span> <span class="nav-text">第1条：了解Objective-C语言的起源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第2条：在类的头文件中尽量少引入其他头文件"><span class="nav-number">2.</span> <span class="nav-text">第2条：在类的头文件中尽量少引入其他头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第3条：多用字面量语法，少用与之等价的方法"><span class="nav-number">3.</span> <span class="nav-text">第3条：多用字面量语法，少用与之等价的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第4条：多用类型常量，少用-define预处理指令"><span class="nav-number">4.</span> <span class="nav-text">第4条：多用类型常量，少用#define预处理指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第5条：用枚举表示状态、选项、状态码"><span class="nav-number">5.</span> <span class="nav-text">第5条：用枚举表示状态、选项、状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#本章关键词"><span class="nav-number">5.0.1.</span> <span class="nav-text">本章关键词</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
