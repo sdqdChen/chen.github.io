@@ -4,15 +4,10 @@
   
     
     <entry>
-      <title><![CDATA[new]]></title>
-      <url>http://yoursite.com/2016/08/30/new/</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[第一章、熟悉Objective-C]]></title>
       <url>http://yoursite.com/2016/08/30/%E7%AC%AC%E4%B8%80%E7%AB%A0%E3%80%81%E7%86%9F%E6%82%89Objective-C/</url>
-      <content type="html"><![CDATA[<h4 id="第1条：了解Objective-C语言的起源"><a href="#第1条：了解Objective-C语言的起源" class="headerlink" title="第1条：了解Objective-C语言的起源"></a>第1条：了解Objective-C语言的起源</h4><ol>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h4 id="第1条：了解Objective-C语言的起源"><a href="#第1条：了解Objective-C语言的起源" class="headerlink" title="第1条：了解Objective-C语言的起源"></a>第1条：了解Objective-C语言的起源</h4><ol>
 <li>Objective-C是使用<code>消息结构</code>的语言，其运行时所应执行的代码由运行环境决定；而使用’函数调用’的语言，如C++/Java，则由编译器决定</li>
 <li>OC对象所占内存分配在堆中，而指针变量分配在栈上；分配在堆中的内存必须直接管理，分配在栈上的内存则会在栈帧弹出时自动清理</li>
 <li>Objective-C使用<code>动态绑定(dynamic binding)</code>的消息结构，也就是在运行时才会检查对象类型。接收一条消息之后，究竟应执行何种代码，由运行期环境而非编译器来决定</li>
