@@ -4,6 +4,40 @@
   
     
     <entry>
+      <title><![CDATA[ARC与循环引用]]></title>
+      <url>http://chenxiao90.com/2016/09/02/ARC%E4%B8%8E%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="（一）ARC简介"><a href="#（一）ARC简介" class="headerlink" title="（一）ARC简介"></a>（一）ARC简介</h2><ul>
+<li><p>ARC：Automatic Reference Counting，自动引用计数，完全消除了手动管理内存的烦恼，编译器会在合适的地方自动插入retain、release或者autorelease，让你不再需要关心内存管理</p>
+</li>
+<li><p>ARC是<strong>编译器特性</strong>，不是iOS运行时特性</p>
+</li>
+</ul>
+<h2 id="（二）基本原理"><a href="#（二）基本原理" class="headerlink" title="（二）基本原理"></a>（二）基本原理</h2><ol>
+<li><strong>ARC规则：</strong>只要还有一个<strong>强指针</strong>变量指向对象，对象就会保存在内存中，也就是如果没有强指针变量指向对象，对象就会自动释放</li>
+<li><strong>强指针：</strong>（strong）默认所有实例变量和局部变量都是强指针</li>
+<li><strong>弱指针：</strong> （weak）弱指针指向的对象被回收后，弱指针会自动变成nil指针，不会引发野指针错误<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span> *name;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) Person *person;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="（三）使用注意"><a href="#（三）使用注意" class="headerlink" title="（三）使用注意"></a>（三）使用注意</h2><ol>
+<li>不能再调用retain、release、autorelease或者retainCount</li>
+<li>可以重写dealloc，但是不能调用[super dealloc];</li>
+<li><strong>@property的参数：</strong><br>1&gt; strong，成员变量是强指针（适用于OC对象类型）<br>2&gt; weak，成员变量是弱指针（适用于OC对象类型）<br>3&gt; 其他非OC对象类型的成员变量依旧用assign</li>
+</ol>
+<h2 id="（四）-class"><a href="#（四）-class" class="headerlink" title="（四）@class"></a>（四）@class</h2><h4 id="1-使用场景："><a href="#1-使用场景：" class="headerlink" title="1. 使用场景："></a>1. 使用场景：</h4><p>对于循环依赖关系来说，比方A类引用B类，同时B类也引用A类<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">#import</span> <span class="string">"B.h"</span></div><div class="line"><span class="comment">@interface A : NSObject</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">B </span>*<span class="keyword">b;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#import "A.h"</span></div><div class="line">@<span class="class"><span class="keyword">interface</span> <span class="title">B</span> : NSObject</span></div><div class="line">&#123;</div><div class="line">    A *a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种代码编译器会报错，而使用@class在两个类中互相声明，编译器就不会报错</p>
+<h4 id="2-用法概括："><a href="#2-用法概括：" class="headerlink" title="2.用法概括："></a>2.用法概括：</h4><p>使用 @class 类名;就可以引用一个类，并且只是说明这是一个类而已，不包含类中所有的属性和方法</p>
+<h4 id="3-和-import的区别"><a href="#3-和-import的区别" class="headerlink" title="3.和#import的区别"></a>3.和#import的区别</h4><p>1&gt; #import会包含引用类的所有信息，包括被引用类的变量和方法；@class方式只是告诉编译器有这个类的声明，不需要知道其内部的实例变量和方法，等实现文件真正需要用到引用类的信息时，就需要#import的方式引入被引用类（也就是在.h文件中用@class 类名;在.m文件中用#import “类名”）<br>2&gt; 如果有上百个文件都#import了同一个文件，或者这些文件被一次#import，那么一旦最开始的头文件有变动，后面引用这个类的所有头文件都要重新编译一遍，效率很低。而如果用@class方式就不会有这种情况</p>
+<h2 id="（五）循环引用"><a href="#（五）循环引用" class="headerlink" title="（五）循环引用"></a>（五）循环引用</h2><p>有一个Person类，拥有一条狗；同时，有一个Dog类，dog对象的主人是person，person拥有dog，dog拥有person，就是循环引用<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@interface</span> <span class="attribute">Person </span>: NSObject</div><div class="line"><span class="comment">//Person类有一个狗的成员变量_dog</span></div><div class="line"><span class="variable">@property</span> (nonatomic, strong) Dog *dog;</div><div class="line"><span class="variable">@end</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@interface</span> <span class="attribute">Dog </span>: NSObject</div><div class="line"><span class="comment">//Dog类有一个人得成员变量_person</span></div><div class="line"><span class="variable">@property</span> (nonatomic, strong) Person *person;</div></pre></td></tr></table></figure>
+<p>main函数中<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Person</span> *p = <span class="comment">[<span class="comment">[Person alloc]</span> init]</span>;</div><div class="line">Dog *d = <span class="comment">[<span class="comment">[Dog alloc]</span> init]</span>;</div><div class="line">//<span class="keyword">person</span>拥有一条狗</div><div class="line">p.dog = d;</div><div class="line">//dog的主人是<span class="keyword">person</span></div><div class="line">d.<span class="keyword">person</span> = p;</div></pre></td></tr></table></figure></p>
+<p>这种情况在内存中的表现如图<br><img src="http://img0.ph.126.net/lLWjJm1JPdfSwy6Vu7PIJw==/6631414111863249819.png" alt="此处输入图片的描述"></p>
+<p>  当代码结束时，person对象和dog对象仍然有强指针互相指向对方，所以无法释放，解决办法就是：<strong>一端用强指针，另一端用弱指针。</strong></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">property</span><span class="title"> </span>(nonatomic, strong) Dog *dog;</div><div class="line"></div><div class="line">@<span class="keyword">property</span><span class="title"> </span>(nonatomic, weak) Person *person;</div></pre></td></tr></table></figure>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[block]]></title>
       <url>http://chenxiao90.com/2016/08/30/block/</url>
       <content type="html"><![CDATA[<a id="more"></a>
@@ -29,17 +63,17 @@
       <title><![CDATA[第一章、熟悉Objective-C]]></title>
       <url>http://chenxiao90.com/2016/08/30/%E7%AC%AC%E4%B8%80%E7%AB%A0%E3%80%81%E7%86%9F%E6%82%89Objective-C/</url>
       <content type="html"><![CDATA[<a id="more"></a>
-<h4 id="第1条：了解Objective-C语言的起源"><a href="#第1条：了解Objective-C语言的起源" class="headerlink" title="第1条：了解Objective-C语言的起源"></a>第1条：了解Objective-C语言的起源</h4><ol>
+<h2 id="第1条：了解Objective-C语言的起源"><a href="#第1条：了解Objective-C语言的起源" class="headerlink" title="第1条：了解Objective-C语言的起源"></a>第1条：了解Objective-C语言的起源</h2><ol>
 <li>Objective-C是使用<code>消息结构</code>的语言，其运行时所应执行的代码由运行环境决定；而使用’函数调用’的语言，如C++/Java，则由编译器决定</li>
 <li>OC对象所占内存分配在堆中，而指针变量分配在栈上；分配在堆中的内存必须直接管理，分配在栈上的内存则会在栈帧弹出时自动清理</li>
 <li>Objective-C使用<code>动态绑定(dynamic binding)</code>的消息结构，也就是在运行时才会检查对象类型。接收一条消息之后，究竟应执行何种代码，由运行期环境而非编译器来决定</li>
 </ol>
-<h4 id="第2条：在类的头文件中尽量少引入其他头文件"><a href="#第2条：在类的头文件中尽量少引入其他头文件" class="headerlink" title="第2条：在类的头文件中尽量少引入其他头文件"></a>第2条：在类的头文件中尽量少引入其他头文件</h4><ol>
+<h2 id="第2条：在类的头文件中尽量少引入其他头文件"><a href="#第2条：在类的头文件中尽量少引入其他头文件" class="headerlink" title="第2条：在类的头文件中尽量少引入其他头文件"></a>第2条：在类的头文件中尽量少引入其他头文件</h2><ol>
 <li>在编译一个使用了某个类的头文件时，不需要知道这个类的全部细节，只需要知道有这个类名就好，所以应该使用<code>向前声明(forward declaring)-@class</code>；如果引入许多根本用不到的内容，就会增加编译时间</li>
 <li>向前声明也解决了两个类互相引用的问题：如果两个类在各自头文件中都引入了对方的头文件，就回导致“循环引用(chicken-and-egg situation)”</li>
 <li>有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下应该把协议放到类扩展中</li>
 </ol>
-<h4 id="第3条：多用字面量语法，少用与之等价的方法"><a href="#第3条：多用字面量语法，少用与之等价的方法" class="headerlink" title="第3条：多用字面量语法，少用与之等价的方法"></a>第3条：多用字面量语法，少用与之等价的方法</h4><ol>
+<h3 id="第3条：多用字面量语法，少用与之等价的方法"><a href="#第3条：多用字面量语法，少用与之等价的方法" class="headerlink" title="第3条：多用字面量语法，少用与之等价的方法"></a>第3条：多用字面量语法，少用与之等价的方法</h3><ol>
 <li>字面量字符串：<code>NSString *str = @&quot;Effective Objective-C 2.0&quot;;</code></li>
 <li>字面量数值：<code>NSNumber *num = @1;</code></li>
 <li>字面量数组：<code>NSArray *animals = @[@&quot;cat&quot;, @&quot;dog&quot;, @&quot;mouse&quot;];</code>;取下标(subscripting)操作：<code>NSString *dog = animals[1];</code></li>
@@ -58,7 +92,7 @@
 <ol>
 <li>所以应该使用字面量语法来创建紫都城、数值、数组、字典，这么做更加简明扼要；应该通过取下标操作来访问数组或字典中的键所对应的元素</li>
 </ol>
-<h4 id="第4条：多用类型常量，少用-define预处理指令"><a href="#第4条：多用类型常量，少用-define预处理指令" class="headerlink" title="第4条：多用类型常量，少用#define预处理指令"></a>第4条：多用类型常量，少用#define预处理指令</h4><ol>
+<h3 id="第4条：多用类型常量，少用-define预处理指令"><a href="#第4条：多用类型常量，少用-define预处理指令" class="headerlink" title="第4条：多用类型常量，少用#define预处理指令"></a>第4条：多用类型常量，少用#define预处理指令</h3><ol>
 <li>不要用预处理指令定义常量。这样定义出来的常量不含类型信息，编译器只是会在编译前据此执行查找与替换工作。即使有人重新定义了常量值，编译器也不会产生警告，这将导致程序中的常量值不一致</li>
 <li><p>在实现文件中用<code>static const</code>来定义只在实现文件中可见的常量，通常在常量名前加k；const保证所声明的常量不能被修改</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">statci <span class="keyword">const</span> <span class="built_in">NSTimerInterval</span> kAnimationDuration = <span class="number">0.3</span>;</div></pre></td></tr></table></figure>
@@ -67,7 +101,8 @@
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//.h</span></div><div class="line"><span class="keyword">extern</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant;</div><div class="line"><span class="comment">//.m</span></div><div class="line"><span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant = <span class="string">@"VALUE"</span>;</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="第5条：用枚举表示状态、选项、状态码"><a href="#第5条：用枚举表示状态、选项、状态码" class="headerlink" title="第5条：用枚举表示状态、选项、状态码"></a>第5条：用枚举表示状态、选项、状态码</h4><h5 id="本章关键词"><a href="#本章关键词" class="headerlink" title="本章关键词"></a>本章关键词</h5><ul>
+<h3 id="第5条：用枚举表示状态、选项、状态码"><a href="#第5条：用枚举表示状态、选项、状态码" class="headerlink" title="第5条：用枚举表示状态、选项、状态码"></a>第5条：用枚举表示状态、选项、状态码</h3><p>本章关键词</p>
+<ul>
 <li>消息结构：messaging structure</li>
 <li>函数调用：function calling</li>
 <li>动态绑定：dynamic binding</li>
