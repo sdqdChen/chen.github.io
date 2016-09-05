@@ -4,6 +4,22 @@
   
     
     <entry>
+      <title><![CDATA[最简单的在OS X系统下制作gif动态图]]></title>
+      <url>http://chenxiao90.com/2016/09/05/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%9C%A8OS-X%E7%B3%BB%E7%BB%9F%E4%B8%8B%E5%88%B6%E4%BD%9Cgif%E5%8A%A8%E6%80%81%E5%9B%BE/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h3 id="所需软件："><a href="#所需软件：" class="headerlink" title="所需软件："></a>所需软件：</h3><ul>
+<li>licecap ： <a href="http://www.pc6.com/mac/135257.html" target="_blank" rel="external">点击下载</a></li>
+</ul>
+<h3 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h3><p>1.打开licecap</p>
+<p><img src="http://ww3.sinaimg.cn/large/801b780ajw1f7ix5imlshj20go0c8wfs.jpg" alt=""></p>
+<p>2.调整大小后点击开始，会弹出设置框，点击save，就开始录制了</p>
+<p><img src="http://ww3.sinaimg.cn/large/801b780ajw1f7ix6khxbej20i00bxta2.jpg" alt=""></p>
+<p>3.点击stop结束录制，即可查看</p>
+<p><img src="http://ww2.sinaimg.cn/large/801b780ajw1f7ix8iin13g20ae05je83.gif" alt=""></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hello World]]></title>
       <url>http://chenxiao90.com/2016/08/29/hello-world/</url>
       <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
