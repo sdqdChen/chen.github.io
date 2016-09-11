@@ -4,6 +4,362 @@
   
     
     <entry>
+      <title><![CDATA[（二）应用数据存储之SQLite数据库]]></title>
+      <url>http://chenxiao90.com/2016/09/11/%EF%BC%88%E4%BA%8C%EF%BC%89%E5%BA%94%E7%94%A8%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B9%8BSQLite%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p><strong>（一）什么是SQLite</strong></p>
+<ul>
+<li>SQLite是一款<strong>轻型</strong>的<strong>嵌入式</strong>数据库</li>
+<li>它占用资源低，处理速度快</li>
+</ul>
+<p><strong>（二）什么是数据库</strong></p>
+<ul>
+<li>数据库(Database)是按照<strong>数据结构</strong>来组织、存储和管理数据的仓库</li>
+<li>数据库可分为两大类：<ul>
+<li>关系型数据库(主流)</li>
+<li>对象型数据库</li>
+</ul>
+</li>
+</ul>
+<p><strong>（三）如何存储数据</strong></p>
+<ul>
+<li>数据库的存储结构跟excel很像，以表(table)为单位</li>
+<li>数据库存储数据的步骤：<ul>
+<li>创建数据库<strong>表</strong>(table)，表名t_开头</li>
+<li>添加字段，需要存储什么数据，就添加什么<strong>字段</strong>(column，列，属性；字段必须要搞一个主键，记录的唯一标识符）</li>
+<li>添加<strong>记录</strong>(row，每行存放多个字段对应的值)</li>
+</ul>
+</li>
+</ul>
+<p><strong>（四）什么是主键</strong></p>
+<ul>
+<li><strong>主键</strong>(Primary Key，简称PK)，用来唯一的标识某一条记录</li>
+<li>良好的数据库编程规范应该要保证每条记录的唯一性，因此增加了主键约束</li>
+<li>例如t_student可以增加一个id字段作为主键，相当于人的身份证</li>
+<li>主键可以是一个或多个字段</li>
+</ul>
+<h2 id="二、SQL语句"><a href="#二、SQL语句" class="headerlink" title="二、SQL语句"></a>二、SQL语句</h2><p><strong>（一）什么是SQL语句</strong></p>
+<ul>
+<li>SQL(structured query language)：<strong>结构化查询语句</strong></li>
+<li>SQL是一种对关系型数据库中的数据进行<strong>定义</strong>和<strong>操作</strong>的语言</li>
+<li>使用SQL语言编写出来的语句，就是SQL语句</li>
+</ul>
+<p><strong>（二）SQL语句特点</strong></p>
+<ul>
+<li>不区分大小写</li>
+<li>每条语句必须以分号结尾</li>
+</ul>
+<p><strong>（三）SQL中常用关键字</strong></p>
+<ul>
+<li>select、insert、update、delete、from、create、where、desc、order、by、group、table、alter、view、index等等</li>
+<li><strong>数据库中不可以使用关键字来命名表和字段</strong></li>
+</ul>
+<p><strong>（四）SQL语句的种类</strong></p>
+<p>1）<strong>数据定义语句</strong>（<strong>DDL</strong> : Data Definition Language）</p>
+<ul>
+<li>包括<strong>creat(创建新表)</strong>和<strong>drop(删除表)</strong>等操作</li>
+</ul>
+<p>2）<strong>数据操作语句</strong>（<strong>DML</strong> : Data Manipulation Language）</p>
+<ul>
+<li>包括<strong>insert(添加)</strong>、<strong>update(修改)</strong>、<strong>delete(删除)</strong>等操作<strong>表中的数据(记录)</strong></li>
+</ul>
+<p>3）<strong>数据查询语句</strong>（<strong>DQL</strong> : Data Query Language）</p>
+<ul>
+<li>用于查询表中的数据</li>
+<li>关键字<strong>select</strong>是用的最多的操作</li>
+<li>其他DQL常用的关键字有<strong>where</strong>，<strong>order by</strong>，<strong>group</strong> <strong>by</strong>和<strong>having</strong></li>
+</ul>
+<p><strong>（五）字段类型</strong></p>
+<ul>
+<li><p>SQLite将数据划分为以下几种数据类型</p>
+<ul>
+<li>integer：整型值</li>
+<li>real：浮点值</li>
+<li>text：文本字符串</li>
+<li>blob：二进制数据（比如文件）</li>
+</ul>
+</li>
+<li><p>但实际上SQLite是无类型的</p>
+<ul>
+<li>就算声明为integer类型，还是能存储文本字符串（主键除外）</li>
+<li>为了保持良好的编程规范、方便程序员之间的交流，应该给每个字段加上具体类型</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、利用Navicat工具演示数据库"><a href="#三、利用Navicat工具演示数据库" class="headerlink" title="三、利用Navicat工具演示数据库"></a>三、利用Navicat工具演示数据库</h2><ul>
+<li>Navicat Premium：<a href="http://www.orsoon.com/Mac/85386.html" target="_blank" rel="external">点击下载</a></li>
+<li>Navicat工具的基本使用</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/801b780ajw1f7mlo01shzj21kw0s7q8t.jpg" alt=""></p>
+<h3 id="（一）DDL语句"><a href="#（一）DDL语句" class="headerlink" title="（一）DDL语句"></a>（一）DDL语句</h3><p><strong>（1）创建新表（creat）</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>creat table 表名 (字段名1 字段类型1, 字段名2 字段类型2, …);</li>
+<li><strong>creat table if not exists 表名 (字段名1 字段类型1, 字段名2 字段类型2, …);</strong> </li>
+</ul>
+<p>2）示例：</p>
+<p><img src="http://ww4.sinaimg.cn/large/801b780ajw1f7mn4v1m48j20g202qdg7.jpg" alt=""></p>
+<p><strong>（2）删表（drop）</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>drop table 表名;</li>
+<li><strong>drop table if exists 表名;</strong> </li>
+</ul>
+<p>2）示例：</p>
+<p><img src="http://ww4.sinaimg.cn/large/801b780ajw1f7mmp4puloj20a202ggln.jpg" alt=""></p>
+<h3 id="（二）DML语句"><a href="#（二）DML语句" class="headerlink" title="（二）DML语句"></a>（二）DML语句</h3><p><strong>（1）插入数据（insert into…values）</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>insert into 表名 (字段1, 字段2, …) values (字段1的值, 字段2的值, …);</li>
+<li><strong>数据库中的字符串内容应该用单括号括住</strong></li>
+</ul>
+<p>2）示例</p>
+<p><img src="http://ww2.sinaimg.cn/large/801b780ajw1f7mmvmzqjoj20b202laa6.jpg" alt=""></p>
+<p>结果</p>
+<p><img src="http://ww3.sinaimg.cn/large/801b780agw1f7mmwc4w7yj204c01v747.jpg" alt=""></p>
+<p>如果字符串没有用单括号括住</p>
+<p><img src="http://ww4.sinaimg.cn/large/801b780agw1f7mmxh3gz6j20fl08vjs3.jpg" alt=""></p>
+<p><strong>（2）修改/更新数据（update set）</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>update 表名 set 字段1 = 字段1的值, 字段2 = 字段2的值, …;</li>
+</ul>
+<p>2）示例：</p>
+<p><img src="http://ww3.sinaimg.cn/large/801b780ajw1f7mn93kig7j209z02qjrg.jpg" alt=""></p>
+<ul>
+<li><strong>上面的示例会将表中所有记录的name都改成aaa，age都改成110</strong></li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/801b780ajw1f7mnabwsw8j207q02it8n.jpg" alt=""></p>
+<p><strong>（3）删除数据（delete from）</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>delete from 表名;</li>
+</ul>
+<p>2）示例：</p>
+<p><img src="http://ww4.sinaimg.cn/large/801b780ajw1f7mncoeypxj209z024t8n.jpg" alt=""></p>
+<ul>
+<li><strong>上面的示例会将表中的所有记录都删掉</strong></li>
+</ul>
+<p><strong>（4）条件语句</strong></p>
+<ul>
+<li>如果只是想更新或删除某些记录，那么就必须在DML语句后加上一些条件</li>
+</ul>
+<p>1）条件语句的常见格式</p>
+<ul>
+<li>where 字段 = 某个值; //当某个字段等于某个值的时候</li>
+<li>where 字段 is 某个值; //is 相当于 =</li>
+<li>where 字段 != 某个值;</li>
+<li>where 字段 is not 某个值;</li>
+<li>where 字段 &gt; 某个值;</li>
+<li>where 字段1 = 某个值 and 字段2 &gt; 某个值; //and 并且</li>
+<li>where 字段1 = 某个值 or 字段2 &gt; 某个值; //or 或</li>
+</ul>
+<p>2）示例：</p>
+<ul>
+<li>将t_student表中年龄大于10且姓名不等于jack的记录，都改成年龄等于5</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update t_student set age = 5 where age &gt; 10 and name != 'jack';</div></pre></td></tr></table></figure>
+<h3 id="（三）DQL语句"><a href="#（三）DQL语句" class="headerlink" title="（三）DQL语句"></a>（三）DQL语句</h3><p><strong>（1）查询数据（select from）</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>select 字段1, 字段2, … from 表名;</li>
+<li>select * from 表名; //查询所有的字段</li>
+</ul>
+<p>2）示例</p>
+<p><img src="http://ww4.sinaimg.cn/large/801b780ajw1f7n53a1n20j20a2020q2w.jpg" alt=""></p>
+<p><strong>（2）起别名</strong></p>
+<p>1）格式（字段和表都可以起别名）：</p>
+<ul>
+<li>select 字段1 别名, 字段2 别名, … from 表名 别名;</li>
+<li>select 字段1 as 别名, 字段2 as 别名, … from 表名 as 别名;</li>
+<li>select 别名.字段1, 别名.字段2, … from 表名 别名;</li>
+</ul>
+<p>2）示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select name myname, age myage from t_student ;</div><div class="line"><span class="comment">//给name起个叫做myname的别名，给age起个叫做myage的别名</span></div><div class="line"></div><div class="line">select s.name, s.age from t_student s ;</div><div class="line"><span class="comment">//给t_student表起个别名叫做s，利用s来引用表中的字段</span></div></pre></td></tr></table></figure>
+<p>3）给数据库起别名的好处：</p>
+<ul>
+<li>用别名获取字段，有提示</li>
+</ul>
+<p><strong>（3）计算记录的数量</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>select count (字段) from 表名;</li>
+<li>selet count (*) from 表名;</li>
+</ul>
+<p><strong>（4）排序</strong></p>
+<p>1）格式：</p>
+<ul>
+<li>select * from t_student order by 字段; </li>
+<li>select * from t_student order by 字段 desc; //降序</li>
+<li>select * from t_student order by 字段 asc; //升序（默认）</li>
+<li>select * from t_student order by age asc, height desc; //先按照年龄排序（升序），年龄相等就按照身高排序（奖序）</li>
+</ul>
+<p><strong>（5）limit</strong></p>
+<ul>
+<li>使用limit可以精确控制查询结果的数量，比如每次只查询10条数据</li>
+</ul>
+<p>1）格式：</p>
+<ul>
+<li>select * from 表名 limit 数值1, 数值2;</li>
+</ul>
+<p>2）示例：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select * from t_student limit <span class="number">4</span>, <span class="number">8</span>;</div><div class="line"><span class="comment">//跳过最前面4条记录，然后取8条记录</span></div><div class="line"></div><div class="line">select * from t_student limit <span class="number">0</span>, <span class="number">8</span>;</div><div class="line"><span class="comment">//跳过0条记录，取5条记录，意味着取前5条记录</span></div></pre></td></tr></table></figure></p>
+<p>3）limit常用来做<strong>分页查询</strong>，比如每页固定显示5条数据：</p>
+<ul>
+<li>第一页：limit 0, 5;</li>
+<li>第二页：limit 5, 5;</li>
+<li>第三页：limit 10, 5;</li>
+<li>…</li>
+<li>第n页：limit 5*(n-1), 5;</li>
+</ul>
+<h3 id="（四）约束"><a href="#（四）约束" class="headerlink" title="（四）约束"></a>（四）约束</h3><p><strong>（1）简单约束</strong></p>
+<p>1）建表时可以给特定的字段设置一些约束，常见约束有：</p>
+<ul>
+<li>not null : 规定字段的值不能为空</li>
+<li>unique : 规定字段的值必须唯一</li>
+<li>default : 制定字段的默认值</li>
+<li>尽量给字段设定严格的约束，保证数据的规范性</li>
+</ul>
+<p>2）示例：</p>
+<p><img src="http://ww3.sinaimg.cn/large/801b780ajw1f7n62mvi32j20hs01u74d.jpg" alt=""></p>
+<p><strong>（2）主键约束</strong></p>
+<p>1）如果表中某些字段的值都一样时，就没法区分这些数据，所以增加主键约束，确保记录的唯一性</p>
+<p>2）主键的设计原则：</p>
+<ul>
+<li>主键应当是对用户没有意义的</li>
+<li>永远也不要更新主键</li>
+<li>主键不应包含动态变化的数据</li>
+<li>主键的值应当由计算机自动生成</li>
+</ul>
+<p>3）主键的声明</p>
+<ul>
+<li>primary key：声明一个主键，默认包含了 not null 和 unique 两个约束</li>
+<li>如果想让主键自动增长（必须是integer类型），应该增加autoincrement</li>
+</ul>
+<p><strong>（3）外键约束</strong></p>
+<p>1）利用外键约束可以用来建立表与表之间的联系</p>
+<p>2）外键的一般情况是：一张表的某个字段引用着另一张表的主键字段</p>
+<p>3）示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//新建一个外键</span></div><div class="line">create table t_student (<span class="keyword">id</span> integer primary key autoincrement, name text, age integer, class_id integer, constraint fk_t_student_class_id_t_class_id foreign key (class_id)  references t_class (<span class="keyword">id</span>);</div><div class="line"><span class="comment">//t_student表中有一个叫做fk_t_student_class_id_t_class_id的外键</span></div><div class="line"><span class="comment">//这个外键的作用是用t_student表中的class_id字段引用t_class表的id字段</span></div></pre></td></tr></table></figure>
+<h2 id="四、通过代码访问数据库"><a href="#四、通过代码访问数据库" class="headerlink" title="四、通过代码访问数据库"></a>四、通过代码访问数据库</h2><ul>
+<li>在iOS中使用SQLite3，首先要添加库文件libsqlite3.dylib和导入主头文件</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/801b780ajw1f7n6znx3gdj21kw0bzn09.jpg" alt=""></p>
+<h3 id="（一）基本使用"><a href="#（一）基本使用" class="headerlink" title="（一）基本使用"></a>（一）基本使用</h3><p><strong>（1）打开数据库</strong></p>
+<p>1）设置数据库的保存路径<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//保存到沙盒caches文件夹内</span></div><div class="line"><span class="built_in">NSString</span> *cachePath = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) lastObject];</div><div class="line"><span class="comment">//拼接文件名</span></div><div class="line"><span class="built_in">NSString</span> *filePath = [cachePath stringByAppendingPathComponent:<span class="string">@"student.sqlite"</span>];</div></pre></td></tr></table></figure></p>
+<p>2）打开数据库<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sqlite3 *_db;</div><div class="line"><span class="keyword">if</span> (sqlite3_open(filePath.UTF8String, &amp;_db) == SQLITE_OK) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"数据库打开成功"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"数据库打开失败"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>sqlite3_open(<code>const char *filename</code>, <code>sqlite3 **ppDb</code>)</p>
+<ul>
+<li>filename : 保存数据库的全路径文件名，必须以C字符串传入，所以要将NSString转成C字符串</li>
+<li>ppDb : 数据库实例</li>
+</ul>
+</li>
+<li><p>打开数据库会自动创建数据库，并返回一个常量，如果返回的常量等于<code>SQLITE_OK</code>，表明成功打开数据库</p>
+</li>
+</ul>
+<p><strong>（2）创建表</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建表格</span></div><div class="line"><span class="built_in">NSString</span> *sql = <span class="string">@"create table if not exists t_student (id integer primary key autoincrement, name text, age integer)"</span>;</div><div class="line"><span class="comment">//第一个参数：数据库实例</span></div><div class="line"><span class="comment">//第二个参数：执行的数据库语句</span></div><div class="line"><span class="comment">//最后一个参数：错误信息</span></div><div class="line"><span class="keyword">char</span> *errmsg;</div><div class="line">sqlite3_exec(_db, sql.UTF8String, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</div><div class="line"><span class="keyword">if</span> (errmsg) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"创建表失败--%s"</span>, errmsg);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"创建表成功"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>sqlite3_exec()可以执行任何SQL语句，包括创表、插入、更新、删除操作。但一般不用它执行查询语句，因为它不会返回查询到的数据</li>
+</ul>
+<p><strong>（3）增加数据</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)add:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="built_in">NSString</span> *sql = <span class="string">@"insert into t_student (name, age) values ('jack', 18)"</span>;</div><div class="line">    <span class="keyword">char</span> *errmsg;</div><div class="line">    sqlite3_exec(_db, sql.UTF8String, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</div><div class="line">    <span class="keyword">if</span> (errmsg) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"增加数据失败--%s"</span>, errmsg);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"增加数据成功"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（4）查询数据</strong></p>
+<ul>
+<li>创建一个Student模型，用来保存数据</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)select:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="comment">//查询语句</span></div><div class="line">    <span class="built_in">NSString</span> *sql = <span class="string">@"select * from t_student"</span>;</div><div class="line">    <span class="built_in">NSMutableArray</span> *arrM = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    <span class="comment">//sqlite3_prepare():</span></div><div class="line">    <span class="comment">//1.sqlite3_prepare()的返回值等于SQLITE_OK，说明SQL语句已经准备成功，没有语法问题</span></div><div class="line">    <span class="comment">//2.第三个参数int nByte : 数据库语句的字节数，-1表示自动计算字节数</span></div><div class="line">    <span class="comment">//3.第四个参数ppStmt : 句柄，用来操作查询的数据</span></div><div class="line">    <span class="keyword">if</span> (sqlite3_prepare(_db, sql.UTF8String, <span class="number">-1</span>, &amp;stmt, <span class="literal">NULL</span>) == SQLITE_OK)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//1.查询句柄</span></div><div class="line">        <span class="comment">//sqlite3_step() : 执行SQL语句</span></div><div class="line">        <span class="comment">//返回SQLITE_ROW说明查询到一条语句</span></div><div class="line">        <span class="keyword">while</span> (sqlite3_step(stmt) == SQLITE_ROW) &#123;</div><div class="line">            <span class="comment">//2.取数据（哪一列）</span></div><div class="line">            <span class="comment">//sqlite3_column_int()会返回指定列的数据</span></div><div class="line">            <span class="keyword">int</span> ID = sqlite3_column_int(stmt, <span class="number">0</span>); <span class="comment">//id列</span></div><div class="line">            <span class="comment">//sqlite3_column_text返回类型为C语言字符串：const unsigned char</span></div><div class="line">            <span class="comment">//所以要把C语言字符串转换成NSString</span></div><div class="line">            <span class="built_in">NSString</span> *name = [<span class="built_in">NSString</span> stringWithUTF8String:sqlite3_column_text(stmt, <span class="number">1</span>)]; <span class="comment">//name列</span></div><div class="line">            <span class="keyword">int</span> age = sqlite3_column_int(stmt, <span class="number">2</span>);</div><div class="line">            </div><div class="line">            <span class="comment">//把取出的数据存到模型中</span></div><div class="line">            Student *s = [Student studentWithName:name age:age];</div><div class="line">            <span class="comment">//把所有的数据模型保存到模型数组中</span></div><div class="line">            [arrM addObject:s];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (Student *s <span class="keyword">in</span> arrM) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@---%d"</span>, s.name, s.age);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（5）模糊查询</strong></p>
+<ul>
+<li><strong>% : 在SQL语句中是通配符，表示任意</strong></li>
+<li>模糊查询的条件语句应使用<code>where like</code></li>
+<li>在SQL语句中模糊查询语句：<code>select * from t_student where name like &#39;%p%&#39;</code>，表示查询含有p的name</li>
+<li>而在OC中，%有特殊含义，所以模糊查询语句为：</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//查询名字中包含a或者电话中包含1的数据</span></div><div class="line"><span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"select * from t_contact where name like '%%%a%%' or phone like '%%%1%%';"</span>];</div></pre></td></tr></table></figure>
+<ul>
+<li>%% == %</li>
+</ul>
+<p><strong>（6）修改数据</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)update:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="built_in">NSString</span> *sql = <span class="string">@"update t_student set name = 'rose' where id = 1;"</span>;</div><div class="line">    <span class="keyword">char</span> *errmsg;</div><div class="line">    sqlite3_exec(_db, sql.UTF8String, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</div><div class="line">    <span class="keyword">if</span> (errmsg) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"修改数据失败--%s"</span>, errmsg);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"修改数据成功"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（6）删除数据</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)delete:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="built_in">NSString</span> *sql = <span class="string">@"delete from t_student where age = 18;"</span>;</div><div class="line">    <span class="keyword">char</span> *errmsg;</div><div class="line">    sqlite3_exec(_db, sql.UTF8String, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</div><div class="line">    <span class="keyword">if</span> (errmsg) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"删除数据失败--%s"</span>, errmsg);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"删除数据成功"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="（二）优化"><a href="#（二）优化" class="headerlink" title="（二）优化"></a>（二）优化</h3><ul>
+<li>sqlite3_exec()那段代码一直是重复的，可以创建一个工具类SqliteTool</li>
+<li>SqliteTool.h</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">void</span>)execWithSql:(<span class="built_in">NSString</span> *)sql; <span class="comment">//插入、修改、删除</span></div><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span> *)selectWithSql:(<span class="built_in">NSString</span> *)sql; <span class="comment">//查询</span></div></pre></td></tr></table></figure>
+<ul>
+<li>SqliteTool.m</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> sqlite3 *_db;</div><div class="line"><span class="comment">/*</span></div><div class="line"> * 初始化数据库</div><div class="line"> */</div><div class="line">+ (<span class="keyword">void</span>)initialize</div><div class="line">&#123;</div><div class="line">    <span class="comment">//1. 设置数据库保存路径</span></div><div class="line">    <span class="comment">//保存到沙盒caches文件夹内</span></div><div class="line">    <span class="built_in">NSString</span> *cachePath = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) lastObject];</div><div class="line">    <span class="comment">//拼接文件名</span></div><div class="line">    <span class="built_in">NSString</span> *filePath = [cachePath stringByAppendingPathComponent:<span class="string">@"student.sqlite"</span>];</div><div class="line">    <span class="comment">//2.打开数据库，就会创建数据库文件</span></div><div class="line">    <span class="comment">//fileName : 保存数据库的全路径文件名，必须以C字符串传入，所以要将NSString转成C字符串</span></div><div class="line">    <span class="comment">//ppDb : 数据库实例</span></div><div class="line">    <span class="keyword">if</span> (sqlite3_open(filePath.UTF8String, &amp;_db) == SQLITE_OK) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"数据库打开成功"</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"数据库打开失败"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="keyword">void</span>)execWithSql:(<span class="built_in">NSString</span> *)sql</div><div class="line">&#123;</div><div class="line">    <span class="comment">//第一个参数：数据库实例</span></div><div class="line">    <span class="comment">//第二个参数：执行的数据库语句</span></div><div class="line">    <span class="comment">//最后一个参数：错误信息</span></div><div class="line">    <span class="keyword">char</span> *errmsg;</div><div class="line">    sqlite3_exec(_db, sql.UTF8String, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (errmsg) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"操作失败--%s"</span>,errmsg);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"操作成功"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span> *)selectWithSql:(<span class="built_in">NSString</span> *)sql</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSMutableArray</span> *arrM = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    <span class="comment">//第三个参数int nByte : 数据库语句的字节数，-1表示自动计算字节数</span></div><div class="line">    <span class="comment">//ppStmt : 句柄用来操作查询的数据</span></div><div class="line">    <span class="comment">//sqlite3_prepare()返回值等于SQLITE_OK，说明SQL语句已经准备成功，没有语法问题</span></div><div class="line">    sqlite3_stmt *stmt;</div><div class="line">    <span class="keyword">if</span> (sqlite3_prepare(_db, sql.UTF8String, <span class="number">-1</span>, &amp;stmt, <span class="literal">NULL</span>) == SQLITE_OK)</div><div class="line">    &#123; <span class="comment">//准备成功</span></div><div class="line">        <span class="comment">//查询句柄</span></div><div class="line">        <span class="comment">//sqlite3_step() : 执行SQL语句</span></div><div class="line">        <span class="comment">//SQLITE_ROW表示查询到一条数据</span></div><div class="line">        <span class="keyword">while</span> (sqlite3_step(stmt) == SQLITE_ROW) &#123; <span class="comment">//有数据</span></div><div class="line">            <span class="comment">//取哪一列的数据</span></div><div class="line">            <span class="keyword">int</span> ID = sqlite3_column_int(stmt, <span class="number">0</span>); <span class="comment">//id列</span></div><div class="line">            <span class="comment">//sqlite3_column_text返回类型为C语言字符串：const unsigned char</span></div><div class="line">            <span class="comment">//所以要把C语言字符串转换成NSString</span></div><div class="line">            <span class="built_in">NSString</span> *name = [<span class="built_in">NSString</span> stringWithUTF8String:sqlite3_column_text(stmt, <span class="number">1</span>)]; <span class="comment">//name列</span></div><div class="line">            <span class="keyword">int</span> age = sqlite3_column_int(stmt, <span class="number">2</span>);</div><div class="line">            </div><div class="line">            <span class="comment">//把取出的数据存到模型中</span></div><div class="line">            Student *s = [Student studentWithName:name age:age];</div><div class="line">            <span class="comment">//把所有的数据模型保存到模型数组中</span></div><div class="line">            [arrM addObject:s];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arrM;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="五、FMDB"><a href="#五、FMDB" class="headerlink" title="五、FMDB"></a>五、FMDB</h2><p>###（一）简介</p>
+<p><strong>（1）什么是FMDB</strong></p>
+<ul>
+<li>FMDB是iOS平台的SQLite数据库框架</li>
+<li>FMDB以OC的方式封装了SQLite的C语言API</li>
+</ul>
+<p><strong>（2）优点</strong></p>
+<ul>
+<li>使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码</li>
+<li>对比苹果自带的Core Data框架，更加轻量级和灵活</li>
+<li>提供了多线程安全的数据库操作方法，有效地防止数据混乱</li>
+</ul>
+<h3 id="（二）FMDB三个主要的类"><a href="#（二）FMDB三个主要的类" class="headerlink" title="（二）FMDB三个主要的类"></a>（二）FMDB三个主要的类</h3><p><strong>（1）FMDatabase</strong></p>
+<ul>
+<li>一个FMDatabase对象就代表一个单独的SQLite数据库</li>
+<li>用来执行SQL语句</li>
+</ul>
+<p><strong>（2）FMResultSet</strong></p>
+<ul>
+<li>使用FMDatabase执行查询后的结果�集</li>
+</ul>
+<p><strong>（3）FMDatabaseQueue</strong></p>
+<ul>
+<li>用于在多线程中执行多个查询或更新，它是线程安全的</li>
+</ul>
+<h3 id="（三）简单使用"><a href="#（三）简单使用" class="headerlink" title="（三）简单使用"></a>（三）简单使用</h3><p><strong>（1）打开数据库</strong></p>
+<p>1）创建数据库实例</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.文件全路径</span></div><div class="line"><span class="built_in">NSString</span> *cachePath = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) lastObject];</div><div class="line"><span class="built_in">NSString</span> *filePath = [cachePath stringByAppendingPathComponent:<span class="string">@"contact.sqlite"</span>];</div><div class="line"><span class="comment">//2.创建一个数据库实例</span></div><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:filePath];</div><div class="line">_db = db;</div></pre></td></tr></table></figure>
+<p>2）打开数据库</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">BOOL</span> open = [db open];</div><div class="line"><span class="keyword">if</span> (open) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"打开数据库成功"</span>);</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"打开数据库失败"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（2）创建表</strong></p>
+<ul>
+<li><strong>在FMDB中，除查询以外的所有操作，都称为“更新”</strong><ul>
+<li>create/drop/insert/update/delete等 </li>
+</ul>
+</li>
+<li>使用<code>executeUpdate:</code>方法执行更新<ul>
+<li><code>- (BOOL)executeUpdate:(NSString*)sql, ...</code></li>
+<li><code>- (BOOL)executeUpdateWithFormat:(NSString*)format, ...</code></li>
+<li><code>- (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">BOOL</span> flag1 = [db executeUpdate:<span class="string">@"create table if not exists t_contact (id integer primary key autoincrement, name text, phone text);"</span>];</div><div class="line"><span class="keyword">if</span> (flag1) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"创建表成功"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"创建表失败"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（2）增加数据</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)add:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="comment">// ?:表示数据库里面的占位符</span></div><div class="line">    <span class="built_in">BOOL</span> flag = [_db executeUpdate:<span class="string">@"insert into t_contact (name, phone) values (?, ?)"</span>, <span class="string">@"asdf"</span>, <span class="string">@"121312412"</span>];</div><div class="line">    <span class="keyword">if</span> (flag) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"添加数据成功"</span>);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"添加数据失败"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（3）修改数据</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)update:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="built_in">BOOL</span> flag = [_db executeUpdate:<span class="string">@"update t_contact set name = 'aaaa'"</span>];</div><div class="line">    <span class="keyword">if</span> (flag) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"更新数据成功"</span>);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"更新数据失败"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（4）删除数据</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)delete:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="built_in">BOOL</span> flag = [_db executeUpdate:<span class="string">@"delete from t_contact"</span>];</div><div class="line">    <span class="keyword">if</span> (flag) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"删除数据成功"</span>);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"删除数据失败"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（5）查询数据</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)select:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    FMResultSet *result = [_db executeQuery:<span class="string">@"select * from t_contact"</span>];</div><div class="line">    <span class="comment">//遍历结果集</span></div><div class="line">    <span class="keyword">while</span> ([result next]) &#123;</div><div class="line">        <span class="built_in">NSString</span> *name = [result stringForColumn:<span class="string">@"name"</span>];</div><div class="line">        <span class="built_in">NSString</span> *phone = [result stringForColumn:<span class="string">@"phone"</span>];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@---%@"</span>, name, phone);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>（6）FMDatabaseQueue</strong></p>
+<ul>
+<li>FMDatabase这个类是线程不安全的，如果在多个线程中同时使用一个FMDatabase实例，会造成数据混乱等问题</li>
+<li>为保证线程安全，FMDB提供方便快捷的FMDatabaseQueue类</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:path];</div><div class="line">[queue inDatabase:^(FMDatabase *db) &#123;</div><div class="line">    [_db executeUpdate:<span class="string">@"insert into t_contact (name, phone) values (?, ?)"</span>, <span class="string">@"asdf"</span>, <span class="string">@"121312412"</span>];</div><div class="line">    </div><div class="line">    FMResultSet *result = [_db executeQuery:<span class="string">@"select * from t_contact"</span>];</div><div class="line">    <span class="keyword">while</span> ([result next]) &#123;</div><div class="line">        <span class="comment">// …</span></div><div class="line">    &#125;</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>事务：把有联系的业务逻辑划分到一个事务里，比如转账，必须两个同时修改成功，才能提交</strong></li>
+<li>注意把操作放在事务里，有一个操作失败，就主动回滚</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)update:(<span class="keyword">id</span>)sender &#123;</div><div class="line">    <span class="comment">// update t_user set money = 500 where name = 'a';</span></div><div class="line">    <span class="comment">//  update t_user set money = 1000 where name = 'b';</span></div><div class="line">    <span class="comment">// a -&gt; b 500 a 500</span></div><div class="line">    <span class="comment">// b + 500 = b 1000</span></div><div class="line">    </div><div class="line">    [_queue inDatabase:^(FMDatabase *db) &#123;</div><div class="line">        <span class="comment">// 开启事务</span></div><div class="line">        [db beginTransaction];</div><div class="line">       <span class="built_in">BOOL</span> flag = [db executeUpdate:<span class="string">@"update t_user set money = ? where name = ?;"</span>,@<span class="number">500</span>,<span class="string">@"a"</span>];</div><div class="line">        <span class="keyword">if</span> (flag) &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"success"</span>);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"failure"</span>);</div><div class="line">            <span class="comment">// 回滚</span></div><div class="line">            [db rollback];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="built_in">BOOL</span> flag1 = [db executeUpdate:<span class="string">@"updat t_user set money = ? where name = ?;"</span>,@<span class="number">1000</span>,<span class="string">@"b"</span>];</div><div class="line">        <span class="keyword">if</span> (flag1) &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"success"</span>);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"failure"</span>);</div><div class="line">            [db rollback];</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 全部操作完成时候再去</span></div><div class="line">        [db commit];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[（一）应用数据存储之plist、偏好设置、归档]]></title>
       <url>http://chenxiao90.com/2016/09/11/%EF%BC%88%E4%B8%80%EF%BC%89%E5%BA%94%E7%94%A8%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B9%8Bplist%E3%80%81%E5%81%8F%E5%A5%BD%E8%AE%BE%E7%BD%AE%E3%80%81%E5%BD%92%E6%A1%A3/</url>
       <content type="html"><![CDATA[<a id="more"></a>
