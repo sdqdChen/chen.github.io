@@ -4,6 +4,122 @@
   
     
     <entry>
+      <title><![CDATA[最新版友盟分享及登录的使用心得]]></title>
+      <url>http://chenxiao90.com/2016/12/09/%E6%9C%80%E6%96%B0%E7%89%88%E5%8F%8B%E7%9B%9F%E5%88%86%E4%BA%AB%E5%8F%8A%E7%99%BB%E5%BD%95%E7%9A%84%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+<blockquote>
+<p>最近好几天一直在捣鼓友盟分享及登录，由于自己作为一名iOS开发新手并且第一次接触友盟，再加上友盟分享6.0版本改动较大，遇到了大大小小好多问题，而网上的很多资料都是旧的，头疼了好几天，终于弄得差不多了，简单记录下</p>
+</blockquote>
+<h2 id="一、配置"><a href="#一、配置" class="headerlink" title="一、配置"></a>一、配置</h2><ul>
+<li><a href="http://dev.umeng.com/social/ios/quick-integration" target="_blank" rel="external">官方文档</a></li>
+</ul>
+<h3 id="（一）U-Share-SDK集成"><a href="#（一）U-Share-SDK集成" class="headerlink" title="（一）U-Share SDK集成"></a>（一）U-Share SDK集成</h3><ul>
+<li>我采用的是手动集成</li>
+</ul>
+<h4 id="1-下载U-Share-SDK"><a href="#1-下载U-Share-SDK" class="headerlink" title="1. 下载U-Share SDK"></a>1. 下载U-Share SDK</h4><ul>
+<li><a href="http://dev.umeng.com/social/ios/sdk-download" target="_blank" rel="external">下载地址</a></li>
+<li>只需要选择自己想要分享到的应用即可</li>
+</ul>
+<h4 id="2-将U-Share-SDK添加到工程"><a href="#2-将U-Share-SDK添加到工程" class="headerlink" title="2. 将U-Share SDK添加到工程"></a>2. 将U-Share SDK添加到工程</h4><ul>
+<li>将<code>UMSocial</code>文件夹拖入到项目里即可</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6jw1fajqtf4zl7j205g02amx5.jpg" alt=""></p>
+<h4 id="3-添加项目配置"><a href="#3-添加项目配置" class="headerlink" title="3. 添加项目配置"></a>3. 添加项目配置</h4><ul>
+<li>在<code>Bulid Setting</code>找到<code>Other Linker Flags</code>，添加<code>-ObjC</code></li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/65e4f1e6jw1fajqwbfp91j20l405hta3.jpg" alt=""></p>
+<h4 id="4-加入依赖系统库"><a href="#4-加入依赖系统库" class="headerlink" title="4. 加入依赖系统库"></a>4. 加入依赖系统库</h4><ul>
+<li>系统库：<code>libsqlite3.tbd</code></li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/65e4f1e6gw1fajr7jcc8bj20fc09wta3.jpg" alt=""></p>
+<h4 id="5-加入分享平台依赖库"><a href="#5-加入分享平台依赖库" class="headerlink" title="5. 加入分享平台依赖库"></a>5. 加入分享平台依赖库</h4><p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1fajr8ldckcj20ju0cdacm.jpg" alt=""></p>
+<h3 id="（二）U-Share-SDK平台配置"><a href="#（二）U-Share-SDK平台配置" class="headerlink" title="（二）U-Share SDK平台配置"></a>（二）U-Share SDK平台配置</h3><h4 id="1-必须要有友盟及第三方平台的appKey和appSecret"><a href="#1-必须要有友盟及第三方平台的appKey和appSecret" class="headerlink" title="1. 必须要有友盟及第三方平台的appKey和appSecret"></a>1. 必须要有友盟及第三方平台的appKey和appSecret</h4><ul>
+<li>网址：<a href="http://dev.umeng.com/social/ios/operation" target="_blank" rel="external">第三方账号申请及绑定</a></li>
+<li>按照上面的步骤一步一步来就行</li>
+<li>我目前只用了QQ、微信和新浪微博</li>
+</ul>
+<blockquote>
+<p>注意点：</p>
+<ol>
+<li>在第三方平台创建应用，如果只是用来测试的话，是不用填写<code>AppStore ID</code>的，只要创建应用就会生成appKey和appSecret并且可以拿来测试，但是<code>Bundle ID</code>一定要和测试应用的一致！</li>
+<li>QQ：一定要填写正确应用调试者账号！如果你在腾讯开放平台登录的账号和你测试的账号不一致，就会出错！</li>
+<li>Sina：一定要按照文档中说的<code>修改安全域名</code>以及<code>设置授权回调页</code>，并且还要在友盟后台绑定</li>
+</ol>
+</blockquote>
+<h4 id="2-配置各平台URL-Scheme"><a href="#2-配置各平台URL-Scheme" class="headerlink" title="2. 配置各平台URL Scheme"></a>2. 配置各平台URL Scheme</h4><blockquote>
+<p>URL Scheme是通过系统找到并跳转对应app的一类设置，通过向项目中的info.plist文件中加入URL types可使用第三方平台所注册的appkey信息向系统注册你的app，当跳转到第三方应用授权或分享后，可直接跳转回你的app</p>
+</blockquote>
+<ul>
+<li>要是设置错了，分享后就没法跳回你的app</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6gw1fajrxukqkxj20k2077401.jpg" alt=""></p>
+<ul>
+<li>具体配置</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6gw1fajrz2u4vxj20jn0d0gp9.jpg" alt=""></p>
+<h4 id="3-适配iOS9-10系统"><a href="#3-适配iOS9-10系统" class="headerlink" title="3. 适配iOS9/10系统"></a>3. 适配iOS9/10系统</h4><ul>
+<li>iOS9系统后Apple对HTTP请求及访问外部应用做了更加严格的要求，包括HTTP白名单、跳转第三方应用白名单等，具体设置第三方平台参数请参照<a href="http://dev.umeng.com/social/ios/ios9" target="_blank" rel="external">适配iOS9/10系统</a></li>
+</ul>
+<h2 id="二、调用U-Share-SDK"><a href="#二、调用U-Share-SDK" class="headerlink" title="二、调用U-Share SDK"></a>二、调用U-Share SDK</h2><h3 id="（一）初始化U-Share及第三方平台"><a href="#（一）初始化U-Share及第三方平台" class="headerlink" title="（一）初始化U-Share及第三方平台"></a>（一）初始化U-Share及第三方平台</h3><ul>
+<li>以下代码根据自己的需要进行选择，一定要设置对appKey和appSecret</li>
+<li>AppDelegate.m中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">#import &lt;UMSocialCore/UMSocialCore.h&gt;</div><div class="line"></div><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line"></div><div class="line">    //打开调试日志</div><div class="line">    [[UMSocialManager defaultManager] openLog:YES];</div><div class="line"></div><div class="line">    //设置友盟appkey</div><div class="line">    [[UMSocialManager defaultManager] setUmSocialAppkey:@&quot;57b432afe0f55a9832001a0a&quot;];</div><div class="line"></div><div class="line">    // 获取友盟social版本号</div><div class="line">    //NSLog(@&quot;UMeng social version: %@&quot;, [UMSocialGlobal umSocialSDKVersion]);</div><div class="line"></div><div class="line">    //设置微信的appKey和appSecret</div><div class="line">    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@&quot;wxdc1e388c3822c80b&quot; appSecret:@&quot;3baf1193c85774b3fd9d18447d76cab0&quot; redirectURL:@&quot;http://mobile.umeng.com/social&quot;];</div><div class="line"></div><div class="line"></div><div class="line">    //设置分享到QQ互联的appKey和appSecret</div><div class="line">     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@&quot;100424468&quot;  appSecret:nil redirectURL:@&quot;http://mobile.umeng.com/social&quot;];</div><div class="line"></div><div class="line">    //设置新浪的appKey和appSecret</div><div class="line">    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@&quot;3921700954&quot;  appSecret:@&quot;04b48b094faeb16683c32669824ebdad&quot; redirectURL:@&quot;http://sns.whalecloud.com/sina2/callback&quot;];</div><div class="line"></div><div class="line">    //支付宝的appKey</div><div class="line">    [[UMSocialManager defaultManager] setPlaform: UMSocialPlatformType_AlipaySession appKey:@&quot;2015111700822536&quot; appSecret:nil redirectURL:@&quot;http://mobile.umeng.com/social&quot;];</div><div class="line"></div><div class="line">    //设置易信的appKey</div><div class="line">    [[UMSocialManager defaultManager] setPlaform: UMSocialPlatformType_YixinSession appKey:@&quot;yx35664bdff4db42c2b7be1e29390c1a06&quot; appSecret:nil redirectURL:@&quot;http://mobile.umeng.com/social&quot;];</div><div class="line"></div><div class="line">    //设置点点虫（原来往）的appKey和appSecret</div><div class="line">    [[UMSocialManager defaultManager] setPlaform: UMSocialPlatformType_LaiWangSession appKey:@&quot;8112117817424282305&quot; appSecret:@&quot;9996ed5039e641658de7b83345fee6c9&quot; redirectURL:@&quot;http://mobile.umeng.com/social&quot;];</div><div class="line"></div><div class="line">    //设置领英的appKey和appSecret</div><div class="line">    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Linkedin appKey:@&quot;81t5eiem37d2sc&quot;  appSecret:@&quot;7dgUXPLH8kA8WHMV&quot; redirectURL:@&quot;https://api.linkedin.com/v1/people&quot;];</div><div class="line"></div><div class="line">    //设置Twitter的appKey和appSecret</div><div class="line">    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Twitter appKey:@&quot;fB5tvRpna1CKK97xZUslbxiet&quot;  appSecret:@&quot;YcbSvseLIwZ4hZg9YmgJPP5uWzd4zr6BpBKGZhf07zzh3oj62K&quot; redirectURL:nil];</div><div class="line"></div><div class="line">    // 如果不想显示平台下的某些类型，可用以下接口设置</div><div class="line">//    [[UMSocialManager defaultManager] removePlatformProviderWithPlatformTypes:@[@(UMSocialPlatformType_WechatFavorite),@(UMSocialPlatformType_YixinTimeLine),@(UMSocialPlatformType_LaiWangTimeLine),@(UMSocialPlatformType_Qzone)]];</div><div class="line">    ...</div><div class="line"></div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="（二）设置系统回调"><a href="#（二）设置系统回调" class="headerlink" title="（二）设置系统回调"></a>（二）设置系统回调</h3><ul>
+<li>AppDelegate.m中添加下面方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 支持所有iOS系统</div><div class="line">- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation</div><div class="line">&#123;</div><div class="line">    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];</div><div class="line">    if (!result) &#123;</div><div class="line">        // 其他如支付等SDK的回调</div><div class="line">    &#125;</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>关于系统回调遇到个小坑：在进行QQ分享测试的时候，我都是发送给我的电脑，然后发现不能自动跳回应用，我就各种百度、论坛询问，反复查看URL Scheme和回调方法，就是搞不定，然后偶然发现发送给好友以及收藏的时候就能自动跳回，然后我再试了下其他的应用发送给我的电脑，竟然都是不能自动跳回的，崩溃了…</p>
+</blockquote>
+<h2 id="三、第三平台分享"><a href="#三、第三平台分享" class="headerlink" title="三、第三平台分享"></a>三、第三平台分享</h2><ul>
+<li>终于到了能够分享的时刻了…</li>
+</ul>
+<h3 id="（一）弹出分享面板"><a href="#（一）弹出分享面板" class="headerlink" title="（一）弹出分享面板"></a>（一）弹出分享面板</h3><ul>
+<li>在你需要进行分享的控制器中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#import &lt;UShareUI/UShareUI.h&gt;</div><div class="line">//点击分享按钮</div><div class="line">- (IBAction)share:(id)sender &#123;</div><div class="line">    __weak typeof(self) weakSelf = self;</div><div class="line">    //显示分享面板</div><div class="line">    [UMSocialUIManager showShareMenuViewInView:nil sharePlatformSelectionBlock:^(UMSocialShareSelectionView *shareSelectionView, NSIndexPath *indexPath, UMSocialPlatformType platformType) &#123;</div><div class="line">    // 根据platformType调用相关平台进行分享</div><div class="line">    if (platformType == UMSocialPlatformType_QQ) &#123;</div><div class="line">        [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_QQ];</div><div class="line">    &#125; else if () &#123;</div><div class="line">    </div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>官方文档里导入的头文件是<code>UMSocialUIManager.h</code>，我这就是导入不了，整了好久才知道，导入<code>&lt;UShareUI/UShareUI.h&gt;</code>也没问题</li>
+<li>block里面的代码根据自己的需要，先判断是什么应用，然后想让应用分享视图或图片或网友就调用相关方法，具体方法在下面</li>
+<li>新浪微博分享网页没反应，要想分享网页链接的话，就选择分享文字，拼接上网页就好了</li>
+<li>为避免应用审核被拒，仅会对有效的平台进行显示，如平台应用未安装，或平台应用不支持等会进行隐藏。 由于以上原因，在模拟器上部分平台会隐藏。</li>
+</ol>
+</blockquote>
+<h3 id="（二）设置分享内容"><a href="#（二）设置分享内容" class="headerlink" title="（二）设置分享内容"></a>（二）设置分享内容</h3><ul>
+<li>比如要分享文本内容，就在上面的block里面判断了分享应用后调用下面的方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (void)shareTextToPlatformType:(UMSocialPlatformType)platformType</div><div class="line">&#123;</div><div class="line">    //创建分享消息对象</div><div class="line">    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];</div><div class="line">    //设置文本</div><div class="line">    messageObject.text = @&quot;社会化组件UShare将各大社交平台接入您的应用，快速武装App。&quot;;</div><div class="line"></div><div class="line">    //调用分享接口</div><div class="line">    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) &#123;</div><div class="line">        if (error) &#123;</div><div class="line">            NSLog(@&quot;************Share fail with error %@*********&quot;,error);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;response data is %@&quot;,data);</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>其他分享类型示例请参考<a href="http://dev.umeng.com/social/ios/u-share-api%E6%96%87%E6%A1%A3" target="_blank" rel="external">U-Share API文档</a></li>
+</ul>
+<h3 id="（三）关于自定义分享面板UI"><a href="#（三）关于自定义分享面板UI" class="headerlink" title="（三）关于自定义分享面板UI"></a>（三）关于自定义分享面板UI</h3><ul>
+<li>分享面板是分模块管理的，有四个主体控件组成：<ul>
+<li>UMSocialShareTitleView title控件</li>
+<li>UMSocialSharePageScrollView 分页控件</li>
+<li>UMSocialSharePageControl PageControl控件</li>
+<li>UMSocialShareCancelControl CancelControl控件</li>
+</ul>
+</li>
+<li>每个控件都有对应的配置类，具体可以在<code>UMSocialShareUIConfig.h</code>文件中可以找的</li>
+<li>我个人的需求是：取消标题；设置面板的背景颜色为白色；更改按钮的图标；分享面板之外还有个蒙版</li>
+<li>代码如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[UMSocialShareUIConfig shareInstance].shareTitleViewConfig.isShow = NO;</div><div class="line">    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewMaskColor = [UIColor lightGrayColor];//分享菜单上面view的背景色</div><div class="line">    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewMaskViewAlpha = 0.8;</div><div class="line">    //以下三句设置整个面板的背景颜色为白色</div><div class="line">    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewBackgroundColor = [UIColor whiteColor];</div><div class="line">    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageBGColor = [UIColor whiteColor];</div><div class="line">    [UMSocialShareUIConfig shareInstance].shareContainerConfig.isShareContainerHaveGradient = false;</div><div class="line">    [UMSocialShareUIConfig shareInstance].shareCancelControlConfig.shareCancelControlBackgroundColor = [UIColor whiteColor];</div><div class="line">    //设置按钮里icon的宽高</div><div class="line">    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageMaxItemIconWidth = 50;</div><div class="line">    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageMaxItemIconHeight = 50;</div></pre></td></tr></table></figure>
+<h2 id="四、第三方平台登录"><a href="#四、第三方平台登录" class="headerlink" title="四、第三方平台登录"></a>四、第三方平台登录</h2><ul>
+<li>第三方平台登录比较简单，点击登录按钮，调用获取授权的方法，并把哪个平台传进去，然后就会自动跳转到对应应用，成功后就能返回用户数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// 在需要进行获取用户信息的UIViewController中加入如下代码</div><div class="line">#import &lt;UMSocialCore/UMSocialCore.h&gt;</div><div class="line"></div><div class="line">- (void)getUserInfoForPlatform:(UMSocialPlatformType)platformType</div><div class="line">&#123;</div><div class="line">    [[UMSocialManager defaultManager] getUserInfoWithPlatform:platformType currentViewController:self completion:^(id result, NSError *error) &#123;</div><div class="line">        UMSocialUserInfoResponse *userinfo =result;</div><div class="line">        NSString *message = [NSString stringWithFormat:@&quot;name: %@\n icon: %@\n gender: %@\n&quot;,userinfo.name,userinfo.iconurl,userinfo.gender];</div><div class="line">        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@&quot;UserInfo&quot;</div><div class="line">                                                        message:message</div><div class="line">                                                       delegate:nil</div><div class="line">                                              cancelButtonTitle:NSLocalizedString(@&quot;确定&quot;, nil)</div><div class="line">                                              otherButtonTitles:nil];</div><div class="line">        [alert show];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>最后附上自己简单地分享界面，没白忙活这几天╮(╯▽╰)╭</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/65e4f1e6jw1fajtspsrkcj20ag0ij0t6.jpg" alt=""></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[（三）应用数据存储之CoreData]]></title>
       <url>http://chenxiao90.com/2016/09/11/%EF%BC%88%E4%B8%89%EF%BC%89%E5%BA%94%E7%94%A8%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B9%8BCoreData/</url>
       <content type="html"><![CDATA[<a id="more"></a>
